@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+	<title>Camera API test</title>
+</head>
+<body>
+	<p>Using Opera Next or Chrome Canary, use this page to take your picture!</p>
+	<!--
+		Ideally these elements aren't created until it's confirmed that the 
+		client supports video/camera, but for the sake of illustrating the 
+		elements involved, they are created with markup (not JavaScript)
+	-->
+	<video id="video" width="640" height="480" autoplay></video>
+	<button id="btnTakePicture" >Take picture</button>
+	<canvas id="canvas" width="640" height="480"></canvas>
+	<a id="btnStop" href="#">Stop Capturing</a>
+
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	<script src="cameraAPI.js"></script>
+	<script src="cameraAPITest.js"></script>
+</body>
+</html>
