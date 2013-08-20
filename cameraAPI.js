@@ -14,7 +14,7 @@ jsFrontendCameraAPI =
 		// get prefixes
 		var prefixes = ['webkit'/*, 'moz', 'ms', 'o'*/];
 
-		// if 'requestFullScreen' is natively supported just use it
+		// if 'getUserMedia' is natively supported just use it
 		if(navigator.getUserMedia) jsFrontendCameraAPI.prefix = '';
 
 		// not natively supported
@@ -30,24 +30,22 @@ jsFrontendCameraAPI =
 			}
 		}
 
-		// browser doesn't support Fullscreen API
+		// browser doesn't support getUserMedia API
 		if(!jsFrontendCameraAPI.prefix) return false;
 	},
 
 	/**
-	 * Start fullscreen
-	 *
-	 * @param string[optional] elementId The name from the element you want to make fullscreen
+	 * Start capturing video footage
 	 */
 	start: function()
 	{
 		// init prefix
 		var prefix = jsFrontendCameraAPI.prefix;
 
-		// fullscreen not supported, stop here
+		// getUserMedia not supported, stop here
 		if(!prefix) return false;
 
-		// grab elements, create settings, etc.
+		// define variables
 		jsFrontendCameraAPI.canvas = document.getElementById('canvas');
 		jsFrontendCameraAPI.context = canvas.getContext('2d');
 		jsFrontendCameraAPI.video = document.getElementById('video');
@@ -56,7 +54,7 @@ jsFrontendCameraAPI =
 			console.log('Video capture error: ', error.code); 
 		};
 
-		// execute fullscreen for webkit-browsers
+		// execute getUserMedia for webkit-browsers
 		if(prefix === 'webkit')
 		{
 			navigator[prefix + 'GetUserMedia'](jsFrontendCameraAPI.videoObject, function(stream){
@@ -96,6 +94,8 @@ jsFrontendCameraAPI =
 	 */
 	takePicture: function(x, y, width, height)
 	{
+
+		// draw picture of video footage
 		jsFrontendCameraAPI.context.drawImage(jsFrontendCameraAPI.video, x, y, width, height);
 	}
 }
