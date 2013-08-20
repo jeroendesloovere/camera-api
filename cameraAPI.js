@@ -94,6 +94,8 @@ jsFrontendCameraAPI =
 	 */
 	takePicture: function(x, y, width, height)
 	{
+		// stop here when not activated yet
+		if(!jsFrontendCameraAPI.video) return false;
 
 		// draw picture of video footage
 		jsFrontendCameraAPI.context.drawImage(jsFrontendCameraAPI.video, x, y, width, height);
