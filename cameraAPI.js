@@ -1,9 +1,9 @@
 /**
- * jsFrontend Camera API
+ * Camera API
  *
  * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
-jsFrontendCameraAPI =
+cameraAPI =
 {
 	prefix: false,
 	canvas: false,
@@ -15,7 +15,7 @@ jsFrontendCameraAPI =
 		var prefixes = ['webkit'/*, 'moz', 'ms', 'o'*/];
 
 		// if 'getUserMedia' is natively supported just use it
-		if(navigator.getUserMedia) jsFrontendCameraAPI.prefix = '';
+		if(navigator.getUserMedia) cameraAPI.prefix = '';
 
 		// not natively supported
 		else
@@ -25,13 +25,13 @@ jsFrontendCameraAPI =
 			{
 				if(navigator[prefixes[i] + 'GetUserMedia'])
 				{
-					jsFrontendCameraAPI.prefix = prefixes[i];
+					cameraAPI.prefix = prefixes[i];
 				}
 			}
 		}
 
 		// browser doesn't support getUserMedia API
-		if(!jsFrontendCameraAPI.prefix) return false;
+		if(!cameraAPI.prefix) return false;
 	},
 
 	/**
@@ -40,16 +40,16 @@ jsFrontendCameraAPI =
 	start: function()
 	{
 		// init prefix
-		var prefix = jsFrontendCameraAPI.prefix;
+		var prefix = cameraAPI.prefix;
 
 		// getUserMedia not supported, stop here
 		if(!prefix) return false;
 
 		// define variables
-		jsFrontendCameraAPI.canvas = document.getElementById('canvas');
-		jsFrontendCameraAPI.context = canvas.getContext('2d');
-		jsFrontendCameraAPI.video = document.getElementById('video');
-		jsFrontendCameraAPI.videoObject = {'video': true};
+		cameraAPI.canvas = document.getElementById('canvas');
+		cameraAPI.context = canvas.getContext('2d');
+		cameraAPI.video = document.getElementById('video');
+		cameraAPI.videoObject = {'video': true};
 		errBack = function(error) {
 			console.log('Video capture error: ', error.code); 
 		};
@@ -57,20 +57,20 @@ jsFrontendCameraAPI =
 		// execute getUserMedia for webkit-browsers
 		if(prefix === 'webkit')
 		{
-			navigator[prefix + 'GetUserMedia'](jsFrontendCameraAPI.videoObject, function(stream){
-				jsFrontendCameraAPI.stream = stream;
-				jsFrontendCameraAPI.video.src = window.webkitURL.createObjectURL(stream);
-				jsFrontendCameraAPI.video.play();
+			navigator[prefix + 'GetUserMedia'](cameraAPI.videoObject, function(stream){
+				cameraAPI.stream = stream;
+				cameraAPI.video.src = window.webkitURL.createObjectURL(stream);
+				cameraAPI.video.play();
 			}, errBack);
 		}
 
 		// natively supported
 		else
 		{
-			navigator.getUserMedia(jsFrontendCameraAPI.videoObject, function(stream) {
-				jsFrontendCameraAPI.stream = stream;
-				jsFrontendCameraAPI.video.src = stream;
-				jsFrontendCameraAPI.video.play();
+			navigator.getUserMedia(cameraAPI.videoObject, function(stream) {
+				cameraAPI.stream = stream;
+				cameraAPI.video.src = stream;
+				cameraAPI.video.play();
 			}, errBack);
 		}
 	},
@@ -80,8 +80,8 @@ jsFrontendCameraAPI =
 	 */
 	stop: function()
 	{
-		jsFrontendCameraAPI.stream.stop();
-		jsFrontendCameraAPI.video.src = '';
+		cameraAPI.stream.stop();
+		cameraAPI.video.src = '';
 	},
 
 	/**
@@ -95,11 +95,11 @@ jsFrontendCameraAPI =
 	takePicture: function(x, y, width, height)
 	{
 		// stop here when not activated yet
-		if(!jsFrontendCameraAPI.video) return false;
+		if(!cameraAPI.video) return false;
 
 		// draw picture of video footage
-		jsFrontendCameraAPI.context.drawImage(jsFrontendCameraAPI.video, x, y, width, height);
+		cameraAPI.context.drawImage(cameraAPI.video, x, y, width, height);
 	}
 }
 
-$(jsFrontendCameraAPI.init);
+$(cameraAPI.init);

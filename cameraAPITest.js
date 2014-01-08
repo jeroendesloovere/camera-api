@@ -1,29 +1,29 @@
 /**
- * jsFrontend Camera API Test
+ * Camera API Test
  *
  * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
-jsFrontendCameraAPITest =
+cameraAPITest =
 {
 	init: function()
 	{
 		// start camera API
-		jsFrontendCameraAPI.start();
+		cameraAPI.start();
 
 		// bind click to 'take picture' button
 		$('#btnTakePicture').on('click', function()
 		{
 			// take picture
-			jsFrontendCameraAPI.takePicture(0, 0, 640, 480);
+			cameraAPI.takePicture(0, 0, 640, 480);
 		});
 
 		// bind click to stop
 		$('#btnStop').on('click', function()
 		{
 			// stop capturing
-			jsFrontendCameraAPI.stop();
+			cameraAPI.stop();
 		});
 	}
 }
 
-$(jsFrontendCameraAPITest.init);
+$(cameraAPITest.init);
